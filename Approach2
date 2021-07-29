@@ -1,0 +1,30 @@
+# Method 2
+
+We’ve come up with a preprocessing method to avoid repeated BFS traversals. We also optimised the compute_total_time function by using heap (set). 
+In the preprocessing part, we create a graph called update graph. The vertices of this graph are the update 
+indices and there is an edge between two vertices if the two updates corresponding to these two update indices 
+have a node in common. So if update 1 had the the nodes {1,2,3} involved in it and if update 2 had the nodes {3,4,5} 
+involved in it, then 1 and 2 would have an edge between them in the update graph since node 3 is common in both of them.
+
+We then use this update graph in the compute_total_time function.
+
+Here, the bottleneck is the preprocessing part. However this approach performs far better than our earlier one. 
+For large cases where our earlier program took around 11 minutes, this one completes in around 100 seconds. 
+More results with smaller cases have been provided in the google sheet below.
+
+However, we weren’t able to understand the paper you had sent us earlier since both of us have had no prior experience in 
+parallel programming. But we do think that parallel programming can speed up our preprocessing function. 
+We tried few things given in the net but none of them seemed to work mostly because we aren’t implementing the parallel 
+programming part correctly. I’ve explained what’s being done in the preprocessing part in more detail below:
+
+From the DAG and the list of updates, I first create a "node to update”  map whose keys are the nodes in the DAG and value 
+for each key is the set of updates that involve that node. Therefore, the number of key value pairs in this map is equal 
+to number of nodes in my DAG.
+Using this map, I create my update graph as follows:
+
+For every key-value pair:
+	Add an edge in the update graph between every two updates in this value set.
+
+Here key is the node and value is the set of updates that involve that node as mentioned earlier.
+So we are adding an edge between every pair of updates in this value set and we are repeating this for every key.
+Thus we get our update graph.
