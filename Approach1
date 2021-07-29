@@ -1,0 +1,21 @@
+#Approach 1
+
+
+In the method described below: 
+U is the total number of updates to process,
+N is total number of nodes in graph
+T is maximum entry time of an update+sum of processing times of all updates.
+The time complexity is O((U^2)*N+N*T) 
+The space complexity is O(U*N +T).
+
+At a high level, at every time step starting from 0, I receive few updates at t and 
+I’ve to execute few updates that came earlier or at t. To know which all updates I can execute at t, 
+I maintain few data structures which give me information as to whether a node is being processed or not, 
+if it’s being processed, then when would that process finish, what are the updates that are pending for each node etc.
+The invariants for these data structures are carefully maintained at every time step based on the updates I receive and execute.
+
+Also suppose there are two updates such that both could be executed at time t but executing one would prevent execution of other
+(i.e the two updates have nodes in common), then I’m updating any one of them in random. 
+In case I’ve to execute the update that came earlier, then the time complexity would become O((U^2)*N*log(U)+N*T).
+The space complexity would stay the same. Sir, so once again should I go ahead with executing the earlier update 
+or execute any one in random?
